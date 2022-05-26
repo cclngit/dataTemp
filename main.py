@@ -5,10 +5,20 @@ import mysql.connector as mysql
 
 try:
     #connexion à la base de données 'data'
-    cnx = mysql.connect(user='ccln', password='1234', host='localhost', database='data')
+    cnx = mysql.connect(
+        user='ccln', 
+        password='1234',
+        port = 3306, 
+        host='10.192.6.147', 
+        database='data'
+        )
+    
     cursor = cnx.cursor()
     
-    values = (cursor.lastrowid, randint(-100,100), randint(0,100), datetime.date.today())
+    #recuper la date du jour format AAAA-MM-JJ + heure
+    date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    values = (cursor.lastrowid, randint(-100,100), randint(0,100), date)
 
     #requete sql
     sql = "INSERT INTO `data_temp_hum` (`id`, `temperature`, `humidite`, `date`) VALUES (%s, %s, %s, %s)"
