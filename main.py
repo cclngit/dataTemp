@@ -5,7 +5,7 @@ import mysql.connector as mysql
 
 try:
     #connexion à la base de données 'data'
-    cnx = mysql.connect(user='root', password='', host='localhost', database='data')
+    cnx = mysql.connect(user='root', password='', host='10.192.6.147', port = 3306, database='data')
     cursor = cnx.cursor()
     
     values = (cursor.lastrowid, randint(-100,100), randint(0,100), datetime.date.today())

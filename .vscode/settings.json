@@ -6,8 +6,17 @@
     },
     "python.analysis.extraPaths": [
         "",
-        "c:\\Users\\cicil\\.vscode\\extensions\\joedevivo.vscode-circuitpython-0.1.17-win32-x64\\stubs",
-        "c:\\Users\\cicil\\AppData\\Roaming\\Code\\User\\globalStorage\\joedevivo.vscode-circuitpython\\bundle\\20220526\\adafruit-circuitpython-bundle-py-20220526\\lib"
+        "/Users/cicilianoaltmann/.vscode/extensions/joedevivo.vscode-circuitpython-0.1.17-darwin-x64/stubs",
+        "/Users/cicilianoaltmann/Library/Application Support/Code/User/globalStorage/joedevivo.vscode-circuitpython/bundle/20220526/adafruit-circuitpython-bundle-py-20220526/lib"
     ],
-    "circuitpython.board.version": null
+    "circuitpython.board.version": null,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-p",
+        "*test.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
 }
