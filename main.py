@@ -1,41 +1,48 @@
-#impoter la bibliteque mysql.connector
 import datetime
-from random import randint
+import Adafruit_DHT
 import mysql.connector as mysql
+from random import randint
+from time import sleep
+from sys import exit
 
-try:
-    #connexion à la base de données 'data'
-    cnx = mysql.connect(
-        user='ccln', 
-        password='1234',
-        port = 3306, 
-        host='10.192.6.147', 
-        database='data'
-        )
+#instansition capteur DHT11
+pin = 4
+dht = Adafruit_DHT.DHT11 #type de capteur DHT11 mettre DHT11 ou DHT22
+
+while True:
+    try:
+        #connexion à la base de données 'data'
+        cnx = mysql.connect(user='....',        #user
+                        password='****',        #password
+                        port = 0000,            #port par défaut
+                        host='XXX.XXX.XXX.XXX', #adresse IP du serveur
+                        database='YYYYY'        #nom de la base de données
+                        )
     
-    cursor = cnx.cursor()
-    
-    #recuper la date du jour format AAAA-MM-JJ + heure
-    date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    values = (cursor.lastrowid, randint(-100,100), randint(0,100), date)
+        #cré un curseur
+        cursor = cnx.cursor()
+        
+        #Lecture des données temp et hum
+        humidite, temperature = Adafruit_DHT.read_retry(dht, pin)
+        
+    except mysql.Error as err:
+        print("Une erreur s'est produite : {}".format(err))
+        
+    finally:
+        #recuper la date du jour format AAAA-MM-JJ + heure
+        date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    #requete sql
-    sql = "INSERT INTO `data_temp_hum` (`id`, `temperature`, `humidite`, `date`) VALUES (%s, %s, %s, %s)"
-    cursor.execute(sql, values)
-    cnx.commit()
-  
-    #affichage de la requete
-    print(cursor.rowcount, "record inserted.")
+        #Remplissage de la base de donnée format id | temp | hum | date + heure
+        donnees = (cursor.lastrowid, temperature, humidite, date)
 
-    #une requete req qui affiche toutes les données de la table
-    req = "SELECT * FROM `data_temp_hum`"
-    cursor.execute(req)
-    for (id, temperature, humidite, date) in cursor:
-        print("id = ", id, "temperature = ", temperature, "humidite = ", humidite, "date = ", date)
+        #requete sql INSERT INTO `nom_de_la_table` (`format`, `de`, `donnees`, `...`) VALUES (%s, %s, %s, %s,...)
+        requete = "INSERT INTO `data_temp_hum` (`id`, `temperature`, `humidite`, `date`) VALUES (%s, %s, %s, %s)"
+        
+        #execution de la requete
+        cursor.execute(requete, donnees)
 
-except mysql.Error as err:
-    print("Something went wrong: {}".format(err))
-
-finally:
-    cnx.close()
+        #commit pour enregistré les données
+        cnx.commit()
+        
+        #attendre 30 min "sleep(1800)" pour la prochaine lecture (ici 2 secondes pour tester)
+        sleep(2)
