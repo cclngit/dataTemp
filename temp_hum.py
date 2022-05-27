@@ -4,7 +4,6 @@ import Adafruit_DHT
 pin = 4
 dht11 = Adafruit_DHT.DHT11
 
-
 while True:
 	try:
 		humidity, temperature = Adafruit_DHT.read_retry(dht11, pin)

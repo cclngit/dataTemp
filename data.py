@@ -3,8 +3,6 @@ import mysql.connector as mysql
 import datetime
 from random import randint
 
-
-
 try:
     #connexion à la base de données 'data'
     cnx = mysql.connect(
