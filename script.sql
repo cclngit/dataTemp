@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS `data`;
+USE `data`;
+CREATE TABLE IF NOT EXISTS `data_temp_hum` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `temperature` FLOAT NOT NULL,
+    `humidite` FLOAT NOT NULL,
+    `date` DATETIME NOT NULL,
+    PRIMARY KEY (`id`)
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;

@@ -1,19 +1,37 @@
 #impoter la bibliteque mysql.connector
 import mysql.connector as mysql
 import datetime
+import os
+from dotenv import load_dotenv
 from random import randint
+
+load_dotenv()
+USER = os.getenv('USER')
+PASSWORD = os.getenv('PASSWORD')
+DATABASE = os.getenv('DATABASE')
 
 try:
     #connexion à la base de données 'data'
     cnx = mysql.connect(
-        user='ccln',
-        password='1234',
-        port = 3306,
-        host='10.192.6.147',
-        database='data'
+        user= USER,
+        password= PASSWORD,
+        database= DATABASE
         )
     
     cursor = cnx.cursor()
+    
+    #créé la d^base de données 'data'
+    query ="""CREATE DATABASE IF NOT EXISTS `data`;
+                USE `data`;
+                CREATE TABLE IF NOT EXISTS `data_temp_hum` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `temperature` FLOAT NOT NULL,
+                    `humidite` FLOAT NOT NULL,
+                    `date` DATETIME NOT NULL,
+                PRIMARY KEY (`id`)
+                ) ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;"""
+                
+    cursor.execute(query)
     
     #recuper la date du jour format AAAA-MM-JJ + heure
     date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
