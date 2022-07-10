@@ -8,13 +8,17 @@ from random import randint
 load_dotenv()
 USER = os.getenv('USER')
 PASSWORD = os.getenv('PASSWORD')
+HOST= os.getenv('HOST')
 DATABASE = os.getenv('DATABASE')
+PORT= os.getenv('PORT')
 
 try:
     #connexion à la base de données 'data'
     cnx = mysql.connect(
         user= USER,
         password= PASSWORD,
+        host = HOST,
+        port= PORT,
         database= DATABASE
         )
     
