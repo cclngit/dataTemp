@@ -25,7 +25,7 @@ try:
     cursor = cnx.cursor()
     
     #créé la d^base de données 'data'
-    query ="""CREATE DATABASE IF NOT EXISTS `data`;
+    query=   """CREATE DATABASE IF NOT EXISTS `data`;
                 USE `data`;
                 CREATE TABLE IF NOT EXISTS `data_temp_hum` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
